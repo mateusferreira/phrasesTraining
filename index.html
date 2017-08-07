@@ -1,0 +1,107 @@
+<!DOCTYPE html> 
+<html> 
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/jquery-ui.css">
+		<title>Phrases Training</title>
+	</head>
+	
+	<body> 
+		<div class = "container-fluid">
+			<div class = "row">
+				<div class="col-md-12"> 
+					<header><h1><p class="text-center">Phrases Training</p></h1></header>
+				</div> 
+				
+				<div class="col-md-3">
+					<div class = "row">
+					<h3>UTILITÁRIOS</h3>
+					<p><a href="http://www.mairovergara.com/category/aprendendo-ingles-com-videos/" target="_blank">Mairo Vergara - Aprendendo Inglês com Vídeos</a></p>
+					<p><a href="http://www.youtube-mp3.org/" target="_blank">Baixar MP3 do youtube</a></p>
+					<p><a href="http://www.audacityteam.org/download/" target="_blank">Audacity - Editor de áudio</a></p>
+					<p><a href="https://drive.google.com/open?id=0B64o12lG2yQeVWZLSHhPaGVFTlU" target="_blank">Texto video 1</a><p>
+					</div>
+					<div class = "row">
+						<h3>HELP WORDS</h3>
+						<textarea class="help" rows="4" id="helpWords"></textarea>
+					</div>
+				</div>
+				
+				<!--div class="col-md-6"-->
+				<div class="invisible">
+					<audio controls="none" id="myVideo">
+					<!--source id="audio" src = "files/audio1.mp3"  type="audio/mpeg">Your browser does not support the audio element.</audio-->
+					<source id="audio" src = ""  type="audio/mpeg">Your browser does not support the audio element.</audio>
+				</div>
+				<div class="col-md-6">
+					<div class="row">	
+						<div class="col-md-7">		
+							<!--input type="file" id="fileinput"  accept="text/plain"/></input-->
+							<input type="file" id="fileinput" max="2" multiple/ accept="audio/mp3, text/plain"></input>
+							<!--input type="file" id="fileMusic" accept="audio/mp3"></input-->
+							<form>
+							  <input type="radio" name="gender" id="radioSequence" checked> Sequence
+							  <input type="radio" name="gender" id="radioRandom"> Random
+							  <input type="checkbox" id="especificPhrases"/>Especific </br>
+							</form> 
+							input your phrases. Ex:2,5,8<input type="text" id="textEspecificPhrases"></br>
+							<input type="number" id="startInNumber" step="1" value = "1" min="1">
+							<input type="number" id="qtdPhrase" step="1"  value = "1" min="1" max="1">
+							<!--input type="checkbox" name="all" id="phraseAll">All<br--> 
+							<span id = "totaldeFrases">MAX: 0</span><br/>
+							<button class="button" id="btStartTraining">START TRAINING</button></br>
+							<button class="button" id="bt1">PLAY</button>
+						</div>
+						<div class="col-md-5">
+							<div class="well"> 
+								<h3><center>SCORE</center></h3><span id="score1"></span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<br/>
+							<label for="comment">INPUT YOUR PHRASE</label>
+							<textarea class="form-control" rows="4" id="comment"></textarea>
+						</div>
+						<div class="form-group">
+							<br/>
+							<label for="comment">CORRECTION</label>
+							<textarea class="form-control" rows="4" id="correction"></textarea>
+						</div>
+						<div class="form-group">
+							<br/>
+							<label for="comment">TRANSLATION</label>
+							<textarea class="form-control" rows="4" id="translation"></textarea>
+						</div>
+						<button class="button" id="enviar">SEND</button>
+						<button class="button" id="nextPhrase">NEXT</button>
+					</div>	
+				</div>
+				
+				<div class="col-md-3">
+					<p>Mussum Ipsum, cacilds vidis litro abertis. Diuretics paradis num copo é motivis de denguis.  Nullam volutpat risus nec leo commodo, 
+					ut interdum diam laoreet. Sed non consequat odio.  Leite de capivaris, leite de mula manquis.  
+					Admodum accumsan disputationi eu sit. Vide electram sadipscing et per.</p>
+					<p>Detraxit consequat et quo num tendi nada.  Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget. 
+					Manduma pindureta quium dia nois paga.  Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi.</p>
+					<p>in elementis mé pra quem é amistosis quis leo.  Delegadis gente finis, bibendum egestas augue arcu ut est.  
+					A ordem dos tratores não altera o pão duris  Quem manda na minha terra sou Euzis!</p>
+					<p>Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis!  Nec orci ornare consequat. Praesent lacinia ultrices consectetur. 
+					Sed non ipsum felis.  Mé faiz elementum girarzis, nisi eros vermeio.</p>
+					
+				</div>
+			</div>
+		</div>
+		
+		<script src="js/jquery-1.11.3.min.js"></script>
+		<script src="js/jquery-ui.js"></script>
+		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/tools.js"></script>
+		<script type="text/javascript" src="js/durationMusic.js"></script>
+	</body> 
+</html>
+<!--https://www.html5rocks.com/pt/tutorials/file/dndfiles/-
+http://www.htmlgoodies.com/beyond/javascript/read-text-files-using-the-javascript-filereader.html>
