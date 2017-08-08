@@ -13,12 +13,12 @@
 	
 	window.onload = function() {
 		window.addEventListener( "keypress", doKeyDown, false);
-		switchButton(true, "100000000");
+		switchButton(true, "1000000000");
 }
 
 	/// habilita ou não os botões
 	function switchButton(statusButton, ctrl){
-		var nameElements = ["fileinput","btStartTraining","bt1","enviar","nextPhrase","comment","correction","translation","textEspecificPhrases"];//"01000000"
+		var nameElements = ["fileinput","btStartTraining","bt1","enviar","nextPhrase","comment","correction","translation","textEspecificPhrases","giveUp"];//"010000000"
 		var ch;
 		//alert("teste "+ctrl.length);
 		
@@ -67,15 +67,15 @@
 		var x2 = x1;
 		x1 = english.indexOf("\n");
 		english = english.substr(0,x1+1).trim();
-
-		translation = fr1.substr(x1+x2+2, fr1.length);
+		
+		translation = fr1.substr(x1+x2+2, fr1.length).trim();
 		fr1 = translation;
-		x1 = translation.substr("\n");
-		translation = translation.substr(0,x1+1).trim();
+		x1 = translation.indexOf("\n");
 		
 		x1 = fr1.indexOf("HELP:>");
 		if(x1 != -1)
 		{
+			translation = translation.substr(0,x1).trim();
 			//console.log("HELP"+fr1.substr(x1+6,fr1.length)+"fiM");
 			document.getElementById('helpWords').value = fr1.substr(x1+6,fr1.length);
 		}
@@ -200,7 +200,7 @@
 			totalPhrase = 1;
 		else
 			totalPhrase = endPhrase - numberCurrent + 1;
-		switchButton(true,"001101000");
+		switchButton(true,"0011010001");
 		document.getElementById('score1').textContent = "Frase nº "+numberCurrent+"\nWrongs: "+wrongs+"\nHITS: "+hits;
 		//console.log("Frase Estudadas: "+totalPhrase );
 	});
@@ -218,27 +218,26 @@
 			document.getElementById('correction').value = english.toUpperCase();//Frase correta aparecerá.
 			wrongs++;
 		}
-		switchButton(true,"001010000");
+		switchButton(true,"0010100001");
 		document.getElementById('translation').value = translation;
 		document.getElementById('score1').textContent = "Frase nº "+numberCurrent+"\nWrongs: "+wrongs+"\nHITS: "+hits;
 	});
 	
-	//Limpa os campos para a próxima lição.
-	$('#nextPhrase').click(function(){
+	function cleanFields(){
 		document.getElementById('translation').value = "";
 		document.getElementById('correction').value = "";
 		document.getElementById('comment').value = "";
 		document.getElementById('helpWords').value = "";
+	}
 	
+	//Limpa os campos para a próxima lição.
+	$('#nextPhrase').click(function(){
+		cleanFields();
 		numberCurrent++;
 		console.log("Number Current: "+numberCurrent+" endPhrase: "+endPhrase);
 		if(numberCurrent > endPhrase)
 		{
-			console.log("HITS: "+hits+" WHONGS: "+wrongs+" total F: "+totalPhrase);
-			alert("Fim dos estudos\nHITS: "+((hits * 100)/totalPhrase).toFixed(2)+ "%\nWRONGS: "+((wrongs * 100)/totalPhrase).toFixed(2)+"%");
-			//switchButton(true, "10000000");
-			document.getElementById('score1').textContent = "";
-			switchButton(true, "110000001");
+			showScoreAndFinish();
 		}
 		else{
 			if(document.getElementById('especificPhrases').checked == true)
@@ -246,10 +245,26 @@
 			
 			selectPhrase(numberCurrent);
 			document.getElementById('score1').textContent = "Frase nº "+numberCurrent+"\nWrongs: "+wrongs+"\nHITS: "+hits;
-			switchButton(true,"001101000");
+			switchButton(true,"0011010001");
 			document.getElementById('comment').focus();
 		}
 		
+	});
+	
+	function showScoreAndFinish(){
+		console.log("HITS: "+hits+" WHONGS: "+wrongs+" total F: "+totalPhrase);
+		//alert("Fim dos estudos\nHITS: "+((hits * 100)/totalPhrase).toFixed(2)+ "%\nWRONGS: "+((wrongs * 100)/totalPhrase).toFixed(2)+"%");
+		alert("Fim dos estudos\nHITS: "+((hits * 100)/(wrongs + hits)).toFixed(2)+ "%\nWRONGS: "+((wrongs * 100)/(wrongs + hits)).toFixed(2)+"%");
+		//switchButton(true, "10000000");
+		document.getElementById('score1').textContent = "";
+		switchButton(true, "1100000010");
+		
+	}
+	
+	$('#giveUp').click(function(){
+		//alert("Don't built yet!");
+		cleanFields();
+		showScoreAndFinish();
 	});
 	
 	//Da o play na faixa selecionada.
@@ -289,10 +304,10 @@ function readSingleFile(evt) {
 	
 	if(f.length < 2 || f.lenght > 2){
 		alert("Please Select 2 (Two) files only");
-		switchButton(true, "100000000");
+		switchButton(true, "1000000000");
 		return;
 	}
-	else switchButton(true,"010000001");
+	else switchButton(true,"0100000010");
 	var outputMusic;
 	var outputText;
 	
