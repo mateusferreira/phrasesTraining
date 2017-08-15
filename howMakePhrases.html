@@ -5,14 +5,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/jquery-ui.css">
-		<title>Phrases Training</title>
+		<title>How we to say in english?</title>
 	</head>
 	
 	<body> 
 		<div class = "container-fluid">
 			<div class = "row">
 				<div class="col-md-12"> 
-					<header><h1><p class="text-center">Phrases Training</p></h1></header>
+					<header><h1><p class="text-center">How we to say in english?</p></h1></header>
 				</div> 
 				
 				<div class="col-md-3">
@@ -22,7 +22,7 @@
 					<p><a href="http://www.youtube-mp3.org/" target="_blank">Baixar MP3 do youtube</a></p>
 					<p><a href="http://www.audacityteam.org/download/" target="_blank">Audacity - Editor de áudio</a></p>
 					<p><a href="https://drive.google.com/open?id=0B64o12lG2yQeVWZLSHhPaGVFTlU" target="_blank">Texto video 1</a><p>
-					<p><a href="howMakePhrases.html">How to say in English?</a></p>
+					<p><a href="index.html">Phrases Training</a></p>
 					</div>
 					<div class = "row">
 						<h3>HELP WORDS</h3>
@@ -39,9 +39,7 @@
 				<div class="col-md-6">
 					<div class="row">	
 						<div class="col-md-7">		
-							<!--input type="file" id="fileinput"  accept="text/plain"/></input-->
-							<input type="file" id="fileinput" max="2" multiple/ accept="audio/mp3, text/plain"></input>
-							<!--input type="file" id="fileMusic" accept="audio/mp3"></input-->
+							<input type="file" id="fileinput" accept="text/plain"></input>
 							<form>
 							  <input type="radio" name="gender" id="radioSequence" checked> Sequence
 							  <input type="radio" name="gender" id="radioRandom"> Random
@@ -54,7 +52,6 @@
 							<span id = "totaldeFrases">MAX: 0</span><br/>
 							<button class="button" id="btStartTraining">START TRAINING</button>
 							<button class="button" id="giveUp">Give Up</button></br>
-							<button class="button" id="bt1">PLAY</button>
 						</div>
 						<div class="col-md-5">
 							<div class="well"> 
@@ -65,18 +62,18 @@
 					<div class="row">
 						<div class="form-group">
 							<br/>
-							<label for="comment">INPUT YOUR PHRASE</label>
+							<label for="comment">HOW WE TO SAY IT IN ENGLISH?</label>
 							<textarea class="form-control" rows="4" id="comment"></textarea>
 						</div>
 						<div class="form-group">
 							<br/>
-							<label for="comment">CORRECTION</label>
-							<textarea class="form-control" rows="4" id="correction"></textarea>
+							<label for="comment">INPUT IN ENGLISH:</label>
+							<textarea class="form-control" rows="4" id="ingles"></textarea>
 						</div>
 						<div class="form-group">
 							<br/>
-							<label for="comment">TRANSLATION</label>
-							<textarea class="form-control" rows="4" id="translation"></textarea>
+							<label for="comment">CORRECTION / INFO</label>
+							<textarea class="form-control" rows="4" id="correction"></textarea>
 						</div>
 						<button class="button" id="enviar">SEND</button>
 						<button class="button" id="nextPhrase">NEXT</button>
@@ -102,8 +99,7 @@
 		<script src="js/jquery-1.11.3.min.js"></script>
 		<script src="js/jquery-ui.js"></script>
 		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/tools.js"></script>
-		<script type="text/javascript" src="js/durationMusic.js"></script>
+		<script type="text/javascript" src="js/toolsTwo.js"></script>
 	</body> 
 </html>
 <!--https://www.html5rocks.com/pt/tutorials/file/dndfiles/-

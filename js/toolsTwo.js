@@ -1,8 +1,9 @@
 
-	var contents;	
-	var faixaMusica;
+	var contents;
+	var fr1;
+	var frCorr;
 	var english;
-	var translation;
+	var portuguese;
 	var numberCurrent;
 	var endPhrase;
 	var hits;
@@ -15,11 +16,11 @@
 	
 	window.onload = function() {
 		window.addEventListener( "keypress", doKeyDown, false);
-		switchButton(true, "1000000000");
+		//switchButton(true, "1000000000");
 }
 
 	/// habilita ou não os botões
-	function switchButton(statusButton, ctrl){
+	/*function switchButton(statusButton, ctrl){
 		var nameElements = ["fileinput","btStartTraining","bt1","enviar","nextPhrase","comment","correction","translation","textEspecificPhrases","giveUp"];//"010000000"
 		var ch;
 		//alert("teste "+ctrl.length);
@@ -33,7 +34,7 @@
 				document.getElementById(nameElements[i]).disabled = statusButton;
 		}
 	}
-	
+	*/
 	function doKeyDown(e) {
 		//alert( e.keyCode )
 		if(e.keyCode == 41){//Shift + numero 0
@@ -56,38 +57,49 @@
 		indice = indice + 1;
 		var t = contents.indexOf(":>"+indice);
 	
-		var fr1 = contents.substr(n+2+tam.length,(t - 2 - tam.length)-n);
+		//atribui a fr1 a string compreendida entre :>x e :>x+1;
+		 fr1 = contents.substr(n+2+tam.length,(t - 2 - tam.length)-n);
 
+		//Extraindo a primeira linha:
 		var x1 = fr1.indexOf("\n");
-		var musicTrack = fr1.substr(x1+1,fr1.length);
-		fr1 = musicTrack;
-		//console.log(musicTrack);
-		x1 = musicTrack.indexOf("\n");
-		musicTrack = musicTrack.substr(0,x1+1);
+		portuguese = fr1.substr(x1+1,fr1.length);
+		
+		fr1 = portuguese;
+		x1 = portuguese.indexOf("\n");
+		portuguese = portuguese.substr(0,x1+1);
 
-		//console.log(musicTrack);
-		english = fr1.substr(x1+1, fr1.length);
-		var x2 = x1;
-		x1 = english.indexOf("\n");
-		english = english.substr(0,x1+1).trim();
+		//console.log("FR1:"+fr1+ "PORT: "+portuguese);
+		fr1 = fr1.substr(x1 + 1, fr1.length).trim();
+		//Peguei a  frase em português para ser traduzida para o inglês.
+		document.getElementById('comment').value = portuguese;
+	}
+	
+	function testaFrases(){
 		
-		translation = fr1.substr(x1+x2+2, fr1.length).trim();
-		fr1 = translation;
-		x1 = translation.indexOf("\n");
-		
-		x1 = fr1.indexOf("HELP:>");
-		if(x1 != -1)
-		{
-			translation = translation.substr(0,x1).trim();
-			//console.log("HELP"+fr1.substr(x1+6,fr1.length)+"fiM");
-			document.getElementById('helpWords').value = fr1.substr(x1+6,fr1.length);
+		var x;
+		var r1;
+		frCorr = "";
+		var result = 0;
+		//console.log("fr1: "+fr1);
+		while(fr1 != '\0'){
+			
+			x = fr1.indexOf("\n");
+			//console.log("X vale: "+x);
+			if(x != -1){
+				r1 = fr1.substr(0,x -1).trim();
+				fr1 = fr1.substr(x + 1, fr1.length).trim();
+			}
+			else{
+				r1 = fr1.substr(0,fr1.length).trim();
+				fr1 = '\0';
+			}
+			console.log("Frase Result: "+r1);
+			frCorr = frCorr + r1 + "\n";
+			//console.log("R1: "+r1 + "English: "+english);
+			if(r1.toUpperCase() == $('#ingles').val().toUpperCase())
+				result = 1;
 		}
-
-		console.log("Music: "+musicTrack);
-		console.log("Phrase: "+english);
-		console.log("Trad: "+translation);
-
-		faixaMusica = musicTrack.trim();
+		return result;
 		
 	}
 	
@@ -119,12 +131,6 @@
 		var x1 = 0;
 		var n1;
 		
-		/*if(especificPhrasesSelected == "\0"){
-			endPhrase = 0;
-			return;
-		}*/
-		
-		//if(especificPhrasesSelected.length > 0){
 		x1 = especificPhrasesSelected.indexOf(",");	
 		if(x1 != -1){
 			n1 = especificPhrasesSelected.substr(0,x1);
@@ -170,7 +176,8 @@
 			totalPhrase = 1;
 		else
 			totalPhrase = endPhrase - numberCurrent + 1;
-		switchButton(true,"0011010001");
+		//switchButton(true,"0011010001");
+		//document.getElementById('comment').value = portuguese;
 		document.getElementById('score1').textContent = "Frase nº "+numberCurrent+"\nWrongs: "+wrongs+"\nHITS: "+hits;
 		//console.log("Frase Estudadas: "+totalPhrase );
 	});
@@ -179,25 +186,24 @@
 	$('#enviar').click(function(){
 		//console.log("MY F: "+$('#comment').val().length);
 		//console.log("OR: "+english.length);
-		if($('#comment').val().toUpperCase() == english.toUpperCase()){
-			document.getElementById('correction').value = "!!!GOOD JOB!!!";//Frase correta aparecerá.
+		if(testaFrases() == 1){
+			document.getElementById('ingles').value = "!!!GOOD JOB!!!";//Frase correta aparecerá.
 			hits++;
 		}
 		else{
 			//alert("EN: "+english+"YOUR: "+$('#comment').val());	
-			document.getElementById('correction').value = english.toUpperCase();//Frase correta aparecerá.
 			wrongs++;
 			sequenceWrongs = sequenceWrongs + temp.toString() +",";
 		}
-		switchButton(true,"0010100001");
-		document.getElementById('translation').value = translation;
+		//switchButton(true,"0010100001");
+		document.getElementById('correction').value = frCorr;//Frase correta aparecerá.
 		document.getElementById('score1').textContent = "Frase nº "+numberCurrent+"\nWrongs: "+wrongs+"\nHITS: "+hits;
 	});
 	
 	function cleanFields(){
-		document.getElementById('translation').value = "";
-		document.getElementById('correction').value = "";
 		document.getElementById('comment').value = "";
+		document.getElementById('correction').value = "";
+		document.getElementById('ingles').value = "";
 		document.getElementById('helpWords').value = "";
 	}
 	
@@ -216,8 +222,8 @@
 			
 			selectPhrase(numberCurrent);
 			document.getElementById('score1').textContent = "Frase nº "+numberCurrent+"\nWrongs: "+wrongs+"\nHITS: "+hits;
-			switchButton(true,"0011010001");
-			document.getElementById('comment').focus();
+			//switchButton(true,"0011010001");
+			document.getElementById('ingles').focus();
 		}
 		
 	});
@@ -228,10 +234,9 @@
 		alert("Fim dos estudos\nHITS: "+((hits * 100)/(wrongs + hits)).toFixed(2)+ "%\nWRONGS: "+((wrongs * 100)/(wrongs + hits)).toFixed(2)+"%");
 		//switchButton(true, "10000000");
 		document.getElementById('score1').textContent = "";
-		cleanFields();
 		sequenceWrongs = sequenceWrongs.substr(0,sequenceWrongs.length - 1);
-		document.getElementById('correction').value = "Study More: "+ sequenceWrongs;
-		switchButton(true, "1100000010");
+		document.getElementById('comment').value = "Study More: "+ sequenceWrongs;
+		//switchButton(true, "1100000010");
 		
 	}
 	
@@ -241,88 +246,33 @@
 		showScoreAndFinish();
 	});
 	
-	//Da o play na faixa selecionada.
-	$('#bt1').click(function(){
-		var retornaFaixa = trackSound(faixaMusica);
-		console.log("INI: "+parseInt(retornaFaixa[0]));
-		console.log("END: "+parseInt(retornaFaixa[1]));
-		
-		var tx2 = parseInt(retornaFaixa[1]) - parseInt(retornaFaixa[0]);
-		//console.log("TX2 "+tx2);
-		
-		var element = document.getElementById("myVideo");
-	
-	element.play(); 
-	element.currentTime = parseInt(retornaFaixa[0])/1000;
-	//element.currentTime = 9.8;
-	
-	var myvar;
-	//myvar = setInterval(function(){pausar(element,myvar)},4700);
-	myvar = setInterval(function(){pausar(element,myvar)},tx2);
-	
-	});
-	
-	//Função interna utilizada para parar a execução do áudio no tempo certo.
-	function pausar(som, x){
-		som.pause();
-		//console.log("Sei la");
-		som.currentTime = 0.0;
-		clearInterval(x);//limpa o looping
-	}
 
 //Função relacionada a seleção dos arquivos.	
 function readSingleFile(evt) {
     //Retrieve the first (and only!) File from the FileList object
 
-    var f = evt.target.files; 
+    var f = evt.target.files[0]; 
 	
-	if(f.length < 2 || f.lenght > 2){
-		alert("Please Select 2 (Two) files only");
-		switchButton(true, "1000000000");
-		return;
+	//switchButton(true,"0100000010");
+
+	if (f) {
+	  var r = new FileReader();
+	  r.onload = function(e) { 
+		  contents = e.target.result;
+		  /*console.log( "Got the file.n" 
+		  +"name: " + f.name + "n"
+		  +"type: " + f.type + "n"
+		  +"size: " + f.size + " bytesn"
+		  + "starts with: " + contents.substr(1, contents.indexOf("?"))
+	); */
+		  getAmountPhrase();
+	  }
+	  r.readAsText(f);
+	  
+	} else { 
+	  alert("Failed to load file");
 	}
-	else switchButton(true,"0100000010");
-	var outputMusic;
-	var outputText;
 	
-	if(f[0].type == "audio/mp3"){
-		outputMusic = 0;
-		outputText = 1;
-	}
-	else if(f[1].type == "audio/mp3"){
-		outputMusic = 1;
-		outputText = 0;
-	}
-	//alert("F : "+f[0].type);
-	//if (f[0].type == ){
-		var blob = window.URL || window.webkitURL;
-		if (!blob) {
-			console.log('Your browser does not support Blob URLs :(');
-			return;           
-		}
-		
-        fileURL = blob.createObjectURL(f[outputMusic]);
-        /*console.log(f[outputMusic]);
-        console.log('File name: '+f[outputMusic].name);
-        console.log('File type: '+f[outputMusic].type);
-        console.log('File BlobURL: '+ fileURL);*/
-        document.getElementById('myVideo').src = fileURL;
-		
-	//}
-	//else{
-		if (f[outputText]) {
-		  var r = new FileReader();
-		  r.onload = function(e) { 
-			  contents = e.target.result;
-			  getAmountPhrase();
-		  }
-		  r.readAsText(f[outputText]);
-		  
-		  //console.log("TEXT TYPE: "+f[outputText].type);// type: text/plain
-		} else { 
-		  alert("Failed to load file");
-		}
-	//}
   }
 //faz parte dos arquivos....
   document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
